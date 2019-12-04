@@ -15,8 +15,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="New Game Project"
-run/main_scene="res://scene/TitleScreen.tscn"
+config/name="Ascension"
+run/main_scene="res://Title.tscn"
 config/icon="res://icon.png"
 
 [display]

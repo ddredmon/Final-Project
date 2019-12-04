@@ -50,6 +50,7 @@ scale = Vector2( 0.055599, 0.0633086 )
 texture = ExtResource( 5 )
 
 [node name="InfoPopupMenu" type="PopupMenu" parent="."]
+visible = true
 margin_right = 20.0
 margin_bottom = 20.0
 
@@ -76,6 +77,16 @@ __meta__ = {
 position = Vector2( 57, 20 )
 scale = Vector2( 0.0564453, 0.0673517 )
 texture = ExtResource( 8 )
+
+[node name="Label" type="Label" parent="InfoPopupMenu"]
+margin_left = 131.44
+margin_top = 265.0
+margin_right = 397.44
+margin_bottom = 418.0
+text = "Press \"a\" to go left
+Press \"d\" to go right"
+align = 1
+uppercase = true
 [connection signal="pressed" from="InfoButton" to="." method="_on_InfoButton_pressed"]
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="InfoPopupMenu/CloseButton" to="." method="_on_CloseButton_pressed"]
