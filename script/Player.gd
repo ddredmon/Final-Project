@@ -16,6 +16,7 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 	if jump and is_on_floor():
 		velocity.y = jump_speed
+		$Sound.play()
 	if $ScreenTest.is_on_screen() == false:
 		get_tree().change_scene("res://Game Over.tscn")
 	max_height = -position.y
