@@ -1,27 +1,35 @@
-extends RigidBody2D
+extends KinematicBody2D
 
-var jump_speed = 600
+var jump_speed = -475
 var speed = 300
-var sprite
+var gravity = Vector2.DOWN * 500
+var velocity = Vector2()
+var score = 0
+var max_height = 0
+var intscore = 0
 
-func _ready():
-	_fixed_process()
-	sprite = get_node("Sprite")
+
+func _physics_process(delta):
+	velocity += gravity * delta
+	get_input()
+	velocity = move_and_slide(velocity, Vector2.UP)
 	
-
-func _fixed_process():
-	var left_key = Input.is_action_just_pressed("ui_left")
-	var right_key = Input.is_action_just_pressed("ui_right")
-	if left_key:
-		set_linear_velocity(Vector2(-speed,get_linear_velocity().y))
-		sprite.set_flip_h(false)
-	if right_key:
-		set_linear_velocity(Vector2(speed,get_linear_velocity().y))
-		sprite.set_flip_h(true)
+	if $ScreenTest.is_on_screen() == false:
+		get_tree().change_scene("res://Game Over.tscn")
+	max_height = -position.y
+	if max_height > score:
+		score = max_height
+		intscore = int(score)
+		$Score.update_score(intscore)
 		
-	if !left_key and !right_key:
-		set_linear_velocity(Vector2(0,get_linear_velocity().y))
-	
+func get_input():
+	velocity.x = 0
+	if Input.is_action_pressed("left"):
+		velocity.x -= speed
+	if Input.is_action_pressed("right"):
+		velocity.x += speed
+
 func _on_Area2D_body_entered(body):
-	if body.is_in_group("paddles") and get_linear_velocity().y > 0:
-		set_linear_velocity(Vector2(0,-jump_speed))
+	if body.is_in_group('paddles'):
+		velocity.y = jump_speed
+		$Sound.play()
